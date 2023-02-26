@@ -429,27 +429,25 @@
      * @param {Date} date
      * @param {Boolean} _updated (private)
      */
-    setDate: function setDate(date, _updated) {
-      var filter = this.options.filter;
-
-      if (isDate(date) || isString(date)) {
-        date = this.parseDate(date);
-
-        if ($.isFunction(filter) && filter.call(this.$element, date, 'day') === false) {
-          return;
-        }
-
-        this.date = date;
-        this.viewDate = new Date(date);
-
-        if (!_updated) {
-          this.pick();
-        }
-
-        if (this.built) {
-          this.render();
-        }
+    setDate: function setDate(date) {
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      var dateString = year + "-" + month + "-" + day;
+      
+      var currentDate = new Date();
+      var selectedDate = new Date(year, month - 1, day);
+      
+      if (selectedDate.getTime() === currentDate.getTime()) {
+        selectedDate.setDate(currentDate.getDate() + 1);
+        day = selectedDate.getDate();
+        month = selectedDate.getMonth() + 1;
+        year = selectedDate.getFullYear();
+        dateString = year + "-" + month + "-" + day;
       }
+    
+      var dateInput = document.getElementById("date-input");
+      dateInput.value = dateString;
     },
 
     /**
