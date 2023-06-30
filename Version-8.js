@@ -179,6 +179,21 @@ var gCurrentDate = {
     pick: null,
   };
 
+  $('#datepicker').datepicker({
+  filter: function (date) {
+    // Erstellen Sie die Date Objekte für den Start- und Endzeitpunkt
+    var start = new Date(2023, 6, 17);
+    var end = new Date(2023, 7, 8); 
+
+    // Vergleichen Sie die Daten
+    if (date >= start && date <= end) {
+      return false; // Das Datum ist nicht auswählbar
+    } else {
+      return true; // Das Datum ist auswählbar
+    }
+  }
+});
+
   var IS_BROWSER = typeof window !== "undefined";
   var WINDOW = IS_BROWSER ? window : {};
   var IS_TOUCH_DEVICE = IS_BROWSER
